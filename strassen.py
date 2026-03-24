@@ -113,7 +113,6 @@ def split(mv):
 
 def strassen(X, Y):
     """
-    
     Returns: list[list]
     """
     X = as_view(X)
