@@ -16,46 +16,6 @@ def validateMatrix(m):
         raise ValueError("All rows must have the same length")
 
 
-class MatrixView:
-    def __init__(self, m, i1, i2, j1, j2):
-        validateMatrix(m)
-        if i1 < 0 or j1 < 0 or i2 > len(m) or j2 > len(m[0]):
-            raise IndexError("MatrixView bounds out of range")
-        if i2 - i1 != j2 - j1:
-            raise ValueError("MatrixView must be square")
-
-        self.matrix = m
-        self.i1 = i1
-        self.i2 = i2
-        self.j1 = j1
-        self.j2 = j2
-        self.length = i2 - i1
-
-    def __repr__(self):
-        lines = []
-        for i in range(self.length):
-            lines.append(
-                ",".join(str(self.matrix[self.i1 + i][self.j1 + j]) for j in range(self.length))
-            )
-        return "[\n" + "\n".join(lines) + "\n]"
-
-    def to_list(self):
-        return [
-            [self.matrix[self.i1 + i][self.j1 + j] for j in range(self.length)]
-            for i in range(self.length)
-        ]
-
-
-def as_matrix(m):
-    if isinstance(m, MatrixView):
-        m = m.to_list()
-
-    validateMatrix(m)
-    if len(m) != len(m[0]):
-        raise ValueError("Must be square")
-    return m
-
-
 def matrix_add(X, Y):
     n = len(X)
     return [[X[i][j] + Y[i][j] for j in range(n)] for i in range(n)]
@@ -67,16 +27,12 @@ def matrix_sub(X, Y):
 
 
 def add(X, Y):
-    X = as_matrix(X)
-    Y = as_matrix(Y)
     if len(X) != len(Y):
         raise ValueError("Must have same dimensions")
     return matrix_add(X, Y)
 
 
 def sub(X, Y):
-    X = as_matrix(X)
-    Y = as_matrix(Y)
     if len(X) != len(Y):
         raise ValueError("Must have same dimensions")
     return matrix_sub(X, Y)
@@ -89,7 +45,6 @@ def join_quadrants(A, B, C, D):
 
 
 def split(m):
-    m = as_matrix(m)
     n = len(m)
     if n & (n - 1) != 0:
         raise ValueError("Need power of two")
@@ -121,9 +76,6 @@ def next_power_two(n):
 
 
 def strassen(X, Y):
-    X = as_matrix(X)
-    Y = as_matrix(Y)
-
     n = len(X)
     if n != len(Y):
         raise ValueError("Must have same dimensions")
