@@ -1,5 +1,14 @@
 import time
 
+def naive_matmul(A, B):
+    rows = len(A)
+    inner = len(B)
+    cols = len(B[0])
+    return [
+        [sum(A[i][k] * B[k][j] for k in range(inner)) for j in range(cols)]
+        for i in range(rows)
+    ]
+
 def matmul(A, B):
     if len(A) != len(A[0]):
         raise ValueError("Must be square")
