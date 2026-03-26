@@ -75,7 +75,10 @@ def next_power_two(n):
     return power
 
 
-def strassen(X, Y):
+def strassen(X, Y, crossover_size=None):
+    if crossover_size is None:
+        crossover_size = CROSSOVER_SIZE
+
     n = len(X)
     if n != len(Y):
         raise ValueError("Must have same dimensions")
@@ -84,24 +87,24 @@ def strassen(X, Y):
     padX = pad_matrix(X, pad_len)
     padY = pad_matrix(Y, pad_len)
 
-    return trim_matrix(strassen_recurse(padX, padY), n)
+    return trim_matrix(strassen_recurse(padX, padY, crossover_size), n)
 
 
-def strassen_recurse(X, Y):
+def strassen_recurse(X, Y, crossover_size):
     n = len(X)
-    if n <= CROSSOVER_SIZE:
+    if n <= crossover_size:
         return matmul(X, Y)
 
     A, B, C, D = split(X)
     E, F, G, H = split(Y)
 
-    P1 = strassen_recurse(A, matrix_sub(F, H))
-    P2 = strassen_recurse(matrix_add(A, B), H)
-    P3 = strassen_recurse(matrix_add(C, D), E)
-    P4 = strassen_recurse(D, matrix_sub(G, E))
-    P5 = strassen_recurse(matrix_add(A, D), matrix_add(E, H))
-    P6 = strassen_recurse(matrix_sub(B, D), matrix_add(G, H))
-    P7 = strassen_recurse(matrix_sub(C, A), matrix_add(E, F))
+    P1 = strassen_recurse(A, matrix_sub(F, H), crossover_size)
+    P2 = strassen_recurse(matrix_add(A, B), H, crossover_size)
+    P3 = strassen_recurse(matrix_add(C, D), E, crossover_size)
+    P4 = strassen_recurse(D, matrix_sub(G, E), crossover_size)
+    P5 = strassen_recurse(matrix_add(A, D), matrix_add(E, H), crossover_size)
+    P6 = strassen_recurse(matrix_sub(B, D), matrix_add(G, H), crossover_size)
+    P7 = strassen_recurse(matrix_sub(C, A), matrix_add(E, F), crossover_size)
 
     C11 = matrix_add(matrix_sub(matrix_add(P5, P4), P2), P6)
     C12 = matrix_add(P1, P2)

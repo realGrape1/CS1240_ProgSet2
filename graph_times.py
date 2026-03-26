@@ -8,11 +8,11 @@ import matplotlib.pyplot as plt
 
 
 MIN_SIZE = 2
-MAX_SIZE = 1024
+MAX_SIZE = 512
 REPEATS = 3
-CUTOFF_SECONDS = 60
+CUTOFF_SECONDS = 100
 SEED = 0
-OUTPUT_PATH = "runtime_comparison.png"
+OUTPUT_PATH = f"runtime_comparison_threshold{SWITCH}.png"
 
 
 def make_matrix(size, rng):
