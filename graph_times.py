@@ -6,6 +6,7 @@ from strassen import strassen
 
 import matplotlib.pyplot as plt
 
+SWITCH = 128
 
 MIN_SIZE = 2
 MAX_SIZE = 512

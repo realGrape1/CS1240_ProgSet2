@@ -10,11 +10,11 @@ SIZES = [32, 64, 128, 256]
 REPEATS_PER_SIZE = 4
 CANDIDATE_CROSSOVERS = [28+4*x for x in range(25)]
 SEED = 0
-OUTPUT_PATH = "benchmark_crossover_search.png"
+OUTPUT_PATH = "benchmark_crossover_search01.png"
 
 
 def make_matrix(size, rng):
-    return [[rng.choice([-1, 0, 1]) for _ in range(size)] for _ in range(size)]
+    return [[rng.choice([0, 1]) for _ in range(size)] for _ in range(size)]
 
 
 def build_cases():

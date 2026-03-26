@@ -1,6 +1,6 @@
 from matmult import matmul
 
-CROSSOVER_SIZE = 32
+CROSSOVER_SIZE = 68
 
 
 def validateMatrix(m):
